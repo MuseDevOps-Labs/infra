@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket       = "zen-pharma-terraform-state-MuseDevOps" # Replace with your S3 bucket name
+    bucket       = "zen-pharma-terraform-state-musedevops" # Replace with your S3 bucket name
     key          = "envs/dev/terraform.tfstate"
     region       = "eu-north-1"
     encrypt      = true
