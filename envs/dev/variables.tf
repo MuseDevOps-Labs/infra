@@ -1,4 +1,22 @@
 
+variable "project" {
+  description = "Project name"
+  type        = string
+  default     = "pharma"
+}
+
+variable "environment" {
+  description = "Deployment environment"
+  type        = string
+  default     = "dev"
+}
+
+variable "region" {
+  description = "AWS region"
+  type        = string
+  default     = "eu-north-1"
+}
+
 variable "db_password" {
   description = "Master password for the RDS PostgreSQL database"
   type        = string
