@@ -18,6 +18,12 @@ variable "subnet_ids" {
   type        = list(string)
 }
 
+variable "enable_irsa" {
+  description = "Whether to create the EKS OIDC provider for IRSA"
+  type        = bool
+  default     = true
+}
+
 variable "kubernetes_version" {
   description = "Kubernetes version for the EKS cluster"
   type        = string

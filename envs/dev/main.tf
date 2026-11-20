@@ -25,6 +25,7 @@ module "eks" {
   env                = local.env
   vpc_id             = module.vpc.vpc_id
   subnet_ids         = module.vpc.private_subnets
+  enable_irsa        = var.enable_irsa
   kubernetes_version = "1.33"
   instance_types     = ["t3.small"]
   min_size           = 1
@@ -64,6 +65,7 @@ module "ecr" {
 
 module "iam" {
   source = "../../modules/iam"
+  count  = var.create_iam_resources ? 1 : 0
 
   project                     = local.project
   env                         = local.env

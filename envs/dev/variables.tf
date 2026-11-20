@@ -28,3 +28,15 @@ variable "github_oidc_provider_arn" {
   type        = string
   default     = ""
 }
+
+variable "enable_irsa" {
+  description = "Whether to create the EKS OIDC provider for IRSA"
+  type        = bool
+  default     = true
+}
+
+variable "create_iam_resources" {
+  description = "Whether to create IAM roles and OIDC providers"
+  type        = bool
+  default     = true
+}
