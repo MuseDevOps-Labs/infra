@@ -1,7 +1,7 @@
 locals {
-  project = var.project
-  env     = var.environment
-  region  = var.region
+  project = "pharma"
+  env     = "dev"
+  region  = "us-east-1"
 }
 
 data "aws_caller_identity" "current" {}
@@ -25,7 +25,6 @@ module "eks" {
   env                = local.env
   vpc_id             = module.vpc.vpc_id
   subnet_ids         = module.vpc.private_subnets
-  enable_irsa        = var.enable_irsa
   kubernetes_version = "1.33"
   instance_types     = ["t3.small"]
   min_size           = 1
@@ -65,16 +64,13 @@ module "ecr" {
 
 module "iam" {
   source = "../../modules/iam"
-  count  = var.create_iam_resources ? 1 : 0
 
-  project                     = local.project
-  env                         = local.env
-  oidc_provider_arn           = module.eks.oidc_provider_arn
-  oidc_provider_url           = module.eks.cluster_oidc_issuer_url
-  github_oidc_provider_arn    = var.github_oidc_provider_arn
-  create_github_oidc_provider = var.create_github_oidc_provider
-  aws_account_id              = data.aws_caller_identity.current.account_id
-  github_org                  = var.github_org
+  project           = local.project
+  env               = local.env
+  oidc_provider_arn = module.eks.oidc_provider_arn
+  oidc_provider_url = module.eks.cluster_oidc_issuer_url
+  aws_account_id    = data.aws_caller_identity.current.account_id
+  github_org        = var.github_org
 }
 
 module "secrets_manager" {
