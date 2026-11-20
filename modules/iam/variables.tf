@@ -27,3 +27,20 @@ variable "github_org" {
   description = "GitHub organization or username that owns frontend and backend"
   type        = string
 }
+
+variable "create_github_oidc_provider" {
+  description = "Whether Terraform creates the GitHub Actions OIDC provider"
+  type        = bool
+  default     = true
+}
+
+variable "github_oidc_provider_arn" {
+  description = "Existing GitHub Actions OIDC provider ARN; required when creation is disabled"
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = var.create_github_oidc_provider || var.github_oidc_provider_arn != ""
+    error_message = "github_oidc_provider_arn must be set when create_github_oidc_provider is false."
+  }
+}

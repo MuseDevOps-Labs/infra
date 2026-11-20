@@ -16,3 +16,15 @@ variable "github_org" {
   type        = string
   default     = "zenpharma"
 }
+
+variable "create_github_oidc_provider" {
+  description = "Whether Terraform creates the GitHub Actions OIDC provider"
+  type        = bool
+  default     = true
+}
+
+variable "github_oidc_provider_arn" {
+  description = "Existing GitHub Actions OIDC provider ARN; required when create_github_oidc_provider is false"
+  type        = string
+  default     = ""
+}

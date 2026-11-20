@@ -11,6 +11,8 @@
 #      issues temporary STS credentials (valid for 1 hour max)
 
 resource "aws_iam_openid_connect_provider" "github_actions" {
+  count = var.create_github_oidc_provider ? 1 : 0
+
   url = "https://token.actions.githubusercontent.com"
 
   client_id_list = ["sts.amazonaws.com"]
@@ -26,6 +28,10 @@ resource "aws_iam_openid_connect_provider" "github_actions" {
   }
 }
 
+locals {
+  github_actions_oidc_provider_arn = var.create_github_oidc_provider ? aws_iam_openid_connect_provider.github_actions[0].arn : var.github_oidc_provider_arn
+}
+
 data "aws_iam_policy_document" "github_actions_assume_role" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
@@ -33,7 +39,7 @@ data "aws_iam_policy_document" "github_actions_assume_role" {
 
     principals {
       type        = "Federated"
-      identifiers = [aws_iam_openid_connect_provider.github_actions.arn]
+      identifiers = [local.github_actions_oidc_provider_arn]
     }
 
     condition {
