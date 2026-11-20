@@ -1,12 +1,16 @@
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~>6.8.0"
+  version = "~> 6.8.0"
 
   name = "${var.project}-${var.env}-vpc"
   cidr = var.vpc_cidr
 
-  azs              = ["${var.region}a", "${var.region}b"]
+  azs = [
+    "${var.region}a",
+    "${var.region}b"
+  ]
+
   public_subnets   = var.public_subnet_cidrs
   private_subnets  = var.private_subnet_cidrs
   database_subnets = var.database_subnet_cidrs
@@ -27,7 +31,8 @@ module "vpc" {
   }
 
   tags = {
-    Project = var.project
-    Env     = var.env
+    Project   = var.project
+    Env       = var.env
+    ManagedBy = "terraform"
   }
 }
