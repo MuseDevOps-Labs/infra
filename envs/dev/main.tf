@@ -29,7 +29,7 @@ module "eks" {
   subnet_ids         = module.vpc.private_subnets
   enable_irsa        = var.enable_irsa
   kubernetes_version = "1.33"
-  instance_types     = ["t3.small"]
+  instance_types     = ["t3.medium"]
   min_size           = 1
   max_size           = 4
   desired_size       = 3
