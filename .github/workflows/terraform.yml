@@ -45,7 +45,7 @@ permissions:
 
 env:
   TF_VERSION: "1.15.6"
-  AWS_REGION: us-east-1
+  AWS_REGION: eu-north-1
 
 # Prevent simultaneous runs on the same branch.
 concurrency:
@@ -56,6 +56,7 @@ jobs:
   # --------------------------------------------------
   # 1. TERRAFORM PLAN
   # --------------------------------------------------
+
   plan:
     name: Terraform Plan
     runs-on: ubuntu-latest
@@ -80,6 +81,28 @@ jobs:
 
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
+
+      # Check password without displaying the secret.
+      - name: Validate Database Password
+        env:
+          DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
+        run: |
+          python3 - <<'PY'
+          import os
+          import sys
+
+          password = os.environ.get("DB_PASSWORD", "")
+
+          if not password:
+              print("ERROR: Database password is empty.")
+              sys.exit(1)
+
+          if any(ord(char) < 32 or ord(char) == 127 for char in password):
+              print("ERROR: Database password contains control characters.")
+              sys.exit(1)
+
+          print("Database password validation passed.")
+          PY
 
       - name: Terraform Init
         run: terraform -chdir=envs/dev init -input=false
@@ -109,6 +132,7 @@ jobs:
   # --------------------------------------------------
   # 2. TERRAFORM APPLY
   # --------------------------------------------------
+
   apply:
     name: Terraform Apply
     runs-on: ubuntu-latest
@@ -155,6 +179,7 @@ jobs:
   # --------------------------------------------------
   # 3. CHECK DESTROY CONFIRMATION
   # --------------------------------------------------
+
   validate_destroy:
     name: Confirm Terraform Destroy
     runs-on: ubuntu-latest
@@ -176,6 +201,7 @@ jobs:
   # --------------------------------------------------
   # 4. TERRAFORM DESTROY
   # --------------------------------------------------
+
   destroy:
     name: Terraform Destroy
     runs-on: ubuntu-latest
