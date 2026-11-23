@@ -34,3 +34,8 @@ Thumbs.db
 # IDE
 .idea/
 .vscode/
+# Terraform state and plan files
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
