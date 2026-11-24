@@ -86,6 +86,13 @@ for tool in ["kubectl", "helm", "aws"]:
         die(f"{tool} not found. Install it before running this script.")
 log("kubectl, helm, and aws CLI found.")
 
+AWS_ACCOUNT_ID, rc = run_cmd(
+    ["aws", "sts", "get-caller-identity", "--query", "Account", "--output", "text"],
+    capture=True,
+)
+if rc != 0 or not AWS_ACCOUNT_ID:
+    die("Unable to determine the AWS account. Check your AWS credentials.")
+
 # ---------------------------------------------------------------------------
 # Collect inputs
 # ---------------------------------------------------------------------------
@@ -111,7 +118,7 @@ AWS_REGION          = prompt("AWS_REGION",          "AWS region where the cluste
                              "us-east-1", "us-east-1")
 ALB_CONTROLLER_ROLE = prompt("ALB_CONTROLLER_ROLE", "IAM role ARN for the AWS Load Balancer Controller",
                              "arn:aws:iam::<aws-account-id>:role/pharma-dev-alb-controller-role",
-                             "arn:aws:iam::873135413040:role/pharma-dev-alb-controller-role")
+                             f"arn:aws:iam::{AWS_ACCOUNT_ID}:role/pharma-dev-alb-controller-role")
 
 default_gitops = os.path.join(DEFAULT_PROJECT_ROOT, "gitops")
 GITOPS_PATH         = prompt("GITOPS_PATH",         "Local path to your gitops repo",
