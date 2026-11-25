@@ -95,3 +95,7 @@ The intended pipeline includes:
 ## Current Status
 
 This repository is an evolving learning and portfolio project. Infrastructure components and automation are developed increment
+
+## Architecture
+
+![ZenPharma AWS DevOps Architecture](images/aws_architecture.png)
