@@ -98,4 +98,6 @@ This repository is an evolving learning and portfolio project. Infrastructure co
 
 ## Architecture
 
-![ZenPharma AWS DevOps Architecture](images/aws_architecture.png)
+## Architecture
+
+![ZenPharma AWS DevOps Architecture](imagesaws_architecture.png)
