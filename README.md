@@ -2,7 +2,7 @@
 
 **Infrastructure as Code | AWS | Terraform | Kubernetes | CI/CD**
 
-A cloud infrastructure project demonstrating how to design, provision, and manage a scalable, secure, and maintainable infrastructure for the ZenPharma application using modern DevOps and Platform Engineering practices.
+A cloud infrastructure project demonstrating how to design, provision, and manage scalable, secure, and maintainable infrastructure for the ZenPharma application using modern DevOps and Platform Engineering practices.
 
 ## Project Overview
 
@@ -22,6 +22,8 @@ The infrastructure is designed around the following AWS services:
 - **AWS Secrets Manager** – Secure application secrets.
 - **Amazon S3** – Terraform remote state storage.
 - **AWS CloudWatch** – Monitoring and logging.
+
+![ZenPharma AWS DevOps Architecture](images/aws_architecture.png)
 
 ## Technology Stack
 
@@ -54,7 +56,9 @@ infra/
 │   ├── ecr/
 │   ├── rds/
 │   └── secrets-manager/
+├── scripts/
 ├── images/
+│   └── aws_architecture.png
 └── README.md
 ```
 
@@ -94,10 +98,4 @@ The intended pipeline includes:
 
 ## Current Status
 
-This repository is an evolving learning and portfolio project. Infrastructure components and automation are developed increment
-
-## Architecture
-
-## Architecture
-
-![ZenPharma AWS DevOps Architecture](imagesaws_architecture.png)
+This repository is an evolving learning and portfolio project. Infrastructure components and automation are developed incrementally.
